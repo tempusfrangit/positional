@@ -11,12 +11,14 @@
 #    under the License.
 
 import inspect
+import sys
 import warnings
 
 import pbr.version
 import wrapt
 
 __version__ = pbr.version.VersionInfo('positional').version_string()
+PYTHON3 = sys.version_info >= (3, 0)
 
 
 class positional(object):
@@ -71,7 +73,12 @@ class positional(object):
 
     def __call__(self, func):
         if self._max_positional_args is None:
-            spec = inspect.getargspec(func)
+            # NOTE: inspect.getargspec() is deprecated in Python 3.0 and newer.
+            # Should use inspect.getfullargspec() instead.
+            if PYTHON3:
+                spec = inspect.getfullargspec(func)
+            else:
+                spec = inspect.getargspec(func)
             self._max_positional_args = len(spec.args) - len(spec.defaults)
 
         plural = '' if self._max_positional_args == 1 else 's'
