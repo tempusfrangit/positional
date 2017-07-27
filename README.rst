@@ -2,7 +2,7 @@
 positional
 ==========
 
-A decorator which enforces only some args may be passed positionally.
+A decorator which enforces only some args may be passed positionally. This library is minimally maintained and should only be used in cases of Python 2 to Python 3 conversions. Please write only Python 3 code going forward.
 
 |PyPi|
 
